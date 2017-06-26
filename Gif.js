@@ -1,5 +1,5 @@
 $( document ).ready(function() {
-  $("button").on("click", function() {
+  $(document).on("click", ".giph-button", function() {
     var person = $(this).attr("data-person");
     var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
       person + "&api_key=dc6zaTOxFJmzC&limit=10";
@@ -8,7 +8,7 @@ $( document ).ready(function() {
         method: "GET"
       })
       .done(function(response) {
-        console.log(response);
+        $("#gifs-appear-here").empty();
         var results = response.data;
         for (var i = 0; i < results.length; i++) {
           var gifDiv = $("<div class='item'>");
@@ -38,9 +38,14 @@ $( document ).ready(function() {
   });
 
   // A submit bar that adds the text as a box that functions like those above
-  $("#submit").submit(function(){
-    <input type="button" id="submit1" value="Submit by Form ID" />
+  $("#add-button-form").submit(function(event){
+    event.preventDefault();
+    var buttonName = $('#button-name-input').val();
+    // Create a button
+    var newButton = $("<button>" + buttonName + "</button>");
+    newButton.attr("class", "giph-button");
+    newButton.attr("data-person", buttonName);
+    $("#buttons").append(newButton);
+    // Put the button on the page
   });
-
-
 });
